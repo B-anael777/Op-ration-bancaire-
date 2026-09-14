@@ -4,12 +4,17 @@ public class Compte
     public string Titulaire { get; set; }
     public decimal Solde { get; private set; }
 
-    // Le constructeur force la saisie du numéro et du titulaire
-    public Compte(string numero, string titulaire)
+    // Constructeur principal
+    public Compte(string numero, string titulaire, decimal soldeInitial)
     {
         Numero = numero;
         Titulaire = titulaire;
-        Solde = 0m;
+        Solde = soldeInitial >= 0 ? soldeInitial : 0m;
+    }
+
+    // Surcharge qui appelle le constructeur principal avec un solde à 0m
+    public Compte(string numero, string titulaire) : this(numero, titulaire, 0m)
+    {
     }
 
     public void Crediter(decimal montant)
