@@ -1,0 +1,25 @@
+﻿@model List<dynamic>
+
+@{
+    ViewData["Title"] = "Gestion des Comptes";
+}
+
+<div class="text-center my-4">
+    <h1 class="display-4">Soldes des Comptes</h1>
+</div>
+
+<div class="row justify-content-center">
+    @foreach (var compte in Model)
+    {
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h5 class="card-title">@compte.Titulaire (N° @compte.Id)</h5>
+                    <p class="card-text fs-4 fw-bold text-primary">
+                        Solde : @compte.Solde €
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
