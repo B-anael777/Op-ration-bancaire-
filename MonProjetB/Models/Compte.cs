@@ -1,13 +1,26 @@
-namespace MonProjetB.Models;
-
 public class Compte
 {
-    public string Numero { get; }
-    public decimal Solde { get; private set; }
+    public string Numero { get; set; }
+    public string Titulaire { get; set; }
+    public decimal Solde { get; set; }
 
-    public Compte(string numero, decimal soldeInitial)
+    public void Crediter(decimal montant)
     {
-        Numero = numero;
-        Solde = soldeInitial;
+        if (montant > 0)
+        {
+            Solde += montant;
+        }
+    }
+
+    public void Debiter(decimal montant)
+    {
+        if (montant > 0 && Solde >= montant)
+        {
+            Solde -= montant;
+        }
+        else
+        {
+            Console.WriteLine("Débit refusé : solde insuffisant ou montant invalide.");
+        }
     }
 }
