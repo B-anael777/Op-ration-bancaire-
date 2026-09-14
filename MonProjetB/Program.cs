@@ -1,9 +1,6 @@
-Compte compte = new Compte();
-compte.Numero = "FR001";
-compte.Titulaire = "Alice";
-compte.Solde = 1000m;
+Compte compte = new Compte("FR001", "Alice", 1000m);
 
-compte.Crediter(200m);
-compte.Debiter(50m);
+// compte.Solde = 1_000_000m; // <-- Si tu décommentes cette ligne, C# affiche une erreur de compilation !
 
-Console.WriteLine($"Solde d'Alice : {compte.Solde} €");
+compte.Crediter(500m); // Fonctionne car Crediter() est à l'intérieur de la classe
+Console.WriteLine($"Solde sécurisé : {compte.Solde} €");
