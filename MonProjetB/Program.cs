@@ -1,54 +1,38 @@
-decimal solde = 1000m;
-decimal montant = -150m; // Tester avec des valeurs positives et négatives
-
-if (montant > 0)
+class Program
 {
-    solde += montant;
-    Console.WriteLine($"Crédit effectué. Nouveau solde : {solde} €");
-}
-else if (montant < 0)
-{
-    decimal debit = -montant; // Conversion de la valeur négative en valeur absolue
-    if (solde >= debit)
+    static void Main()
     {
-        solde -= debit;
-        Console.WriteLine($"Débit effectué. Nouveau solde : {solde} €");
+        decimal soldeCourant = 1000m;
+
+        soldeCourant = Crediter(soldeCourant, 200m);
+        soldeCourant = Debiter(soldeCourant, 150m);
+        soldeCourant = Debiter(soldeCourant, 2000m); // Refusé
+
+        Console.WriteLine($"Solde final : {soldeCourant} €");
     }
-    else
+
+    static decimal Crediter(decimal solde, decimal montant)
     {
-        Console.WriteLine("Opération refusée : Solde insuffisant.");
+        if (montant <= 0)
+        {
+            Console.WriteLine("Erreur : Le montant du crédit doit être strictement positif.");
+            return solde;
+        }
+        return solde + montant;
+    }
+
+    static decimal Debiter(decimal solde, decimal montant)
+    {
+        if (montant <= 0)
+        {
+            Console.WriteLine("Erreur : Le montant du débit doit être strictement positif.");
+            return solde;
+        }
+        if (montant > solde)
+        {
+            Console.WriteLine("Opération refusée : Solde insuffisant.");
+            return solde;
+        }
+        return solde - montant;
     }
 }
-else
-{
-    Console.WriteLine("Le montant de l'opération ne peut pas être nul.");
-}
-
-// 2. CONFIGURATION ASP.NET CORE (Au milieu)
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.MapStaticAssets();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
-
