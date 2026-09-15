@@ -1,5 +1,8 @@
-var c1 = new Compte("FR001", "Alice");       // Solde par défaut : 0€
-var c2 = new Compte("FR002", "Bob", 500m);    // Solde initial : 500€
 
-Console.WriteLine($"C1 ({c1.Titulaire}) : {c1.Solde} €");
-Console.WriteLine($"C2 ({c2.Titulaire}) : {c2.Solde} €");
+var compte1 = new Compte("FR001", "Alice", 1000m);
+var compte2 = compte1; 
+
+compte2.Crediter(500m);
+
+
+Console.WriteLine($"Solde de compte1 après crédit via compte2 : {compte1.Solde} €");
