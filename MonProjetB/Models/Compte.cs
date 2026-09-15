@@ -2,28 +2,27 @@ public class Compte
 {
     public string Numero { get; }
     public string Titulaire { get; set; }
-    public decimal Solde { get; private set; }
+    public decimal Solde { get; protected set; } // accessible dans les classes filles
 
-    // Constructeur principal
-    public Compte(string numero, string titulaire, decimal soldeInitial)
+    public Compte(string numero, string titulaire, decimal soldeInitial = 0m)
     {
         Numero = numero;
         Titulaire = titulaire;
         Solde = soldeInitial >= 0 ? soldeInitial : 0m;
     }
 
-    // Surcharge qui appelle le constructeur principal avec un solde à 0m
-    public Compte(string numero, string titulaire) : this(numero, titulaire, 0m)
-    {
-    }
-
-    public void Crediter(decimal montant)
+    public virtual void Crediter(decimal montant)
     {
         if (montant > 0) Solde += montant;
     }
 
-    public void Debiter(decimal montant)
+    public virtual bool Debiter(decimal montant)
     {
-        if (montant > 0 && Solde >= montant) Solde -= montant;
+        if (montant > 0 && Solde >= montant)
+        {
+            Solde -= montant;
+            return true;
+        }
+        return false;
     }
 }
