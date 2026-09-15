@@ -1,9 +1,20 @@
-// Exercice 10 : Test de l'héritage
-var cc = new CompteCourant("CC-001", "Alice", 100m, 200m);
-cc.Debiter(250m); // Utilise le découvert autorisé
+// Exercice 11 : Mini-projet de synthèse
+Client client = new Client("Bob Martin");
 
-var ce = new CompteEpargne("CE-001", "Alice", 0.03m, 1000m);
-ce.CalculerInterets(); // 3% sur 1000 = +30€
+CompteCourant compteCourant = new CompteCourant("CC-500", client.Nom, 500m, 100m);
+CompteEpargne compteEpargne = new CompteEpargne("CE-500", client.Nom, 0.03m, 2000m);
 
-Console.WriteLine($"Compte Courant Alice : {cc.Solde} €");
-Console.WriteLine($"Compte Épargne Alice : {ce.Solde} €");
+client.AjouterCompte(compteCourant);
+client.AjouterCompte(compteEpargne);
+
+compteCourant.Debiter(150m);
+compteEpargne.Crediter(300m);
+compteEpargne.CalculerInterets();
+
+Console.WriteLine($"=== Synthèse du client : {client.Nom} ===");
+foreach (var c in client.Comptes)
+{
+    Console.WriteLine($"[{c.GetType().Name}] N° {c.Numero} | Solde : {c.Solde:F2} €");
+}
+
+Console.WriteLine($"Solde global du patrimoine : {client.ObtenirSoldeTotal():F2} €");
